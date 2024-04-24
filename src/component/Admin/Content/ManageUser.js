@@ -5,12 +5,15 @@ import TableUser from "./TableUser";
 import { useEffect, useState } from "react";
 import { getAllUsers } from "../../../services/apiServices";
 import ModalUpdateUser from "./ModalUpdateUser";
+import ModalDeleteUSer from "./ModalDeleteUser";
 
 const ManageUser = (props) => {
     const [showModalCreateUser, setshowModalCreateUser] = useState(false);
     const [listUsers, setlistUsers] = useState([])
     const [showModalUpdateUser, setShowModalUpdateUser] = useState(false);
     const [dataUpdate, setDataUpdate] = useState({});
+    const [showModalDeleteUser, setShowModalDeleteUser] = useState(false);
+    const [dataDelete, setDataDelete] = useState({});
 
     //componentDidMount
     useEffect(() => {
@@ -28,6 +31,14 @@ const ManageUser = (props) => {
         setShowModalUpdateUser(true);
         setDataUpdate(user);
     }
+
+    const resetUpdateData = () => {
+        setDataUpdate({});
+    }
+    const handleClickBtnDelete = (user) => {
+        setShowModalDeleteUser(true);
+        setDataDelete(user);
+    }
     return (
         <div className="manage-user-container">
             <div className="title">
@@ -44,6 +55,8 @@ const ManageUser = (props) => {
                 <div className="table-users-container">
                     <TableUser listUsers={listUsers}
                         handleClickBtnUpdate={handleClickBtnUpdate}
+                        handleClickBtnDelete={handleClickBtnDelete}
+
                     />
                 </div>
                 <ModalCreateUser
@@ -56,6 +69,14 @@ const ManageUser = (props) => {
                     show={showModalUpdateUser}
                     setShow={setShowModalUpdateUser}
                     dataUpdate={dataUpdate}
+                    fetchListUsers={fetchListUsers}
+                    resetUpdateData={resetUpdateData}
+                />
+                <ModalDeleteUSer
+                    show={showModalDeleteUser}
+                    setShow={setShowModalDeleteUser}
+                    fetchListUsers={fetchListUsers}
+                    dataDelete={dataDelete}
                 />
             </div>
 
