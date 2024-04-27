@@ -38,7 +38,7 @@ const postLogin = (userEmail, userPassword) => {
         {
             email: userEmail,
             password: userPassword,
-            delay: 4000
+            delay: 4000 //tinh bang miligiay
         });
 
 }
