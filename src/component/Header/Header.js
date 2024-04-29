@@ -18,11 +18,14 @@ const Header = () => {
   const handleRegister = () => {
     navigate('/register')
   }
+  const handleLogout = () => {
+    navigate('/login')
+  }
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
         {/* <Navbar.Brand href="">Hỏi Dân IT</Navbar.Brand> */}
-        <NavLink to='/' className='navbar-brand'>Hỏi Dân IT</NavLink>
+        <NavLink to='/' className='navbar-brand'>Huỳnh Anh Hoàng</NavLink>
 
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
@@ -41,7 +44,7 @@ const Header = () => {
             </>
             :
             <NavDropdown title="Settings" id="basic-nav-dropdown">
-              <NavDropdown.Item >Log out</NavDropdown.Item>
+              <NavDropdown.Item onClick={() => { handleLogout() }} >Log out</NavDropdown.Item>
               <NavDropdown.Item >Profile</NavDropdown.Item>
             </NavDropdown>
           }
