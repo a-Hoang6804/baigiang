@@ -19,7 +19,6 @@ instance.interceptors.request.use(function (config) {
     config.headers["Authorization"] = "Bearer " + access_token;
     // axios.defaults.headers.common = { 'Authorization': `Bearer ${access_token}` }
     NProgress.start();
-
     // Do something before request is sent
     return config;
 }, function (error) {
