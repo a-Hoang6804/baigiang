@@ -18,7 +18,7 @@ import './SideBar.scss';
 
 const SideBar = (props) => {
     const { image, collapsed, toggled, handleToggleSidebar } = props;
-    const navigate=useNavigate();
+    const navigate = useNavigate();
     return (
         <>
             <ProSidebar
@@ -42,8 +42,8 @@ const SideBar = (props) => {
                         }}
                     >
                         <DiReact size={'3em'} color={"00bfff"} />
-                        <span onClick={()=>navigate('/')}>
-                        Bài React Hoàng</span>
+                        <span onClick={() => navigate('/')}>
+                            Bài React Hoàng</span>
                     </div>
                 </SidebarHeader>
 
@@ -53,7 +53,7 @@ const SideBar = (props) => {
                             icon={<MdDashboard />}
                         >
                             Dashboard
-                                <Link to="/admins"></Link>
+                            <Link to="/admins"></Link>
                         </MenuItem>
                     </Menu>
                     <Menu iconShape="circle">
@@ -61,11 +61,14 @@ const SideBar = (props) => {
                             icon={<FaGem />}
                             title="Features"
                         >
-                            <MenuItem> Quản lý Users
-                            <Link to="/admins/manage-users"></Link>
+                            <MenuItem>
+                                Quản lý Users
+                                <Link to="/admins/manage-users"></Link>
                             </MenuItem>
-                            <MenuItem > Quản lý Bài Quiz</MenuItem>
-                            <Link to="/admins/manage-quizzes"></Link>
+                            <MenuItem >
+                                Quản lý Bài Quiz
+                                <Link to="/admins/manage-quizzes"></Link>
+                            </MenuItem>
                             <MenuItem> Quản lý Câu Hỏi</MenuItem>
                         </SubMenu>
 

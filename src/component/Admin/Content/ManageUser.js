@@ -15,10 +15,10 @@ const ManageUser = (props) => {
     const [dataUpdate, setDataUpdate] = useState({});
     const [showModalDeleteUser, setShowModalDeleteUser] = useState(false);
     const [dataDelete, setDataDelete] = useState({});
-    const LIMIT_USER = 4;
+    const LIMIT_USER = 5;
 
     const [pageCount, setPageCount] = useState(0);
-    const [currentPage, setCurrentPage]=useState(1);
+    const [currentPage, setCurrentPage] = useState(1);
     //componentDidMount
     useEffect(() => {
         // fetchListUsers();

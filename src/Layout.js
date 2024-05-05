@@ -14,7 +14,7 @@ import DetailQuiz from './component/User/DetailQuiz';
 import ManageQuiz from './component/Admin/Content/Quiz/ManageQuiz';
 
 
-const NotFound=()=>{
+const NotFound = () => {
     return (
         <div className='container mt-3 alert alert-danger'>
             404.Not found data with your current URL
@@ -38,7 +38,7 @@ const Layout = (props) => {
                 </Route>
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
-        <Route path="*" element={<NotFound />} />
+                <Route path="*" element={<NotFound />} />
             </Routes>
             <ToastContainer
                 position="top-center"
