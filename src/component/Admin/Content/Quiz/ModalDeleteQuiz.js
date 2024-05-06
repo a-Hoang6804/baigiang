@@ -1,50 +1,47 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import { deleteUser } from '../../../services/apiService';
 import { toast } from 'react-toastify';
+import { deleteQuizForAdmin } from '../../../../services/apiService';
 
-const ModalDeleteUSer = (props) => {
+const ModalDeleteQuiz = (props) => {
     const { show, setShow, dataDelete } = props;
 
     const handleClose = () => setShow(false);
-    const handleSubmitDeleteUser = async () => {
-        let data = await deleteUser(dataDelete.id);
 
+    const handleSubmitDeleteQuiz = async () => {
+        let data = await deleteQuizForAdmin(dataDelete.id);
         if (data && data.EC === 0) {
             toast.success(data.EM);
             handleClose();
-            // await props.fetchListUsers();
-            props.setCurrentPage(1);
-            await props.fetchListUsersWithPaginate(1);
+            await props.fetchQuiz();
         }
 
         if (data && data.EC !== 0) {
             toast.error(data.EM);
         }
     }
-    // console.log(props.dataDelete);
+
     return (
         <>
-
             <Modal
                 show={show}
                 onHide={handleClose}
                 backdrop="static"
             >
                 <Modal.Header closeButton>
-                    <Modal.Title>Confirm Delete the User?</Modal.Title>
+                    <Modal.Title>Confirm Delete the Quiz?</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>Are you sure to delete this user? email=
+                <Modal.Body>Are you sure to delete this quiz. id =
                     <b>
-                        {dataDelete && dataDelete.email ? dataDelete.email : ""}
+                        {dataDelete && dataDelete.id ? dataDelete.id : ""}
                     </b>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
                         Cancel
                     </Button>
-                    <Button variant="primary" onClick={() => { handleSubmitDeleteUser() }}>
+                    <Button variant="primary" onClick={() => { handleSubmitDeleteQuiz() }}>
                         Confirm
                     </Button>
                 </Modal.Footer>
@@ -53,4 +50,4 @@ const ModalDeleteUSer = (props) => {
     );
 }
 
-export default ModalDeleteUSer;
+export default ModalDeleteQuiz;
