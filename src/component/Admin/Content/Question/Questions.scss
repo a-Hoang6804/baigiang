@@ -14,27 +14,35 @@
             width: 50%;
         }
         .group-upload{
-            padding-top: 15px;
+            padding-top: 7px;
             .label-up{
-                height: 30px;
-                border: 1px solid rgb(35, 35, 35);border-radius: 5px;
-                padding: 0px 10px;
                 margin-right: 5px;
                 cursor: pointer;
+                color: #9068ff;
+                font-size: 25px;
+                &:hover{
+                    color: #4400ff;
+                }
             }
         }
         .btn-add{
             padding: 15px;
             .icon-add{
-                font-size: 30px;
-                color: rgb(224, 58, 58);
+                font-size: 25px;
+                color: #ff0000;
                 cursor: pointer;
+                &:hover{
+                    color: #b16666;
+                }
             }
             .icon-remove{
                 margin-left: 10px;
-                font-size: 30px;
-                color: rgb(72, 252, 105);
+                font-size: 25px;
+                color:#2e26c4;
                 cursor: pointer;
+                &:hover{
+                    color: #277d91
+                }
             }
         }
     }
@@ -52,15 +60,20 @@ font-size: 20px;
         }
         .btn-group{
             .icon-add{
-                font-size: 30px;
-                
+                font-size: 25px;
                 cursor: pointer;
+                &:hover{
+                    color: #0989ff;
+                }
             }
             .icon-remove{
                 margin-left: 10px;
-                font-size: 30px;
+                font-size: 25px;
                 color: rgb(253, 66, 28);
                 cursor: pointer;
+                &:hover{
+                    color: #ff7608;
+                }
             }
         }
     }
