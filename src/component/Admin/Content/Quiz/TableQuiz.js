@@ -32,6 +32,7 @@ const TableQuiz = (props) => {
         setDataDelete(quiz);
         setIsShowModalDelete(true);
     }
+
     return (
         <>
             <div>List Quizzes: </div>
@@ -43,6 +44,7 @@ const TableQuiz = (props) => {
                         <th scope="col">Description</th>
                         <th scope="col">Type</th>
                         <th scope="col">Actions</th>
+
                     </tr>
                 </thead>
                 <tbody>
