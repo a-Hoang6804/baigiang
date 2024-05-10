@@ -8,7 +8,7 @@ import { RiImageAddFill } from "react-icons/ri";
 import { v4 as uuidv4, validate } from 'uuid';
 import _ from 'lodash';
 import LightBox from "react-awesome-lightbox"
-import { getAllQuizForAdmin } from "../../../../services/apiService";
+import { getAllQuizForAdmin, getQuizWithQA } from "../../../../services/apiService";
 import { postCreateNewAnswerForQuestion } from '../../../../services/apiService';
 import { postCreateNewQuestionsForQuiz } from '../../../../services/apiService';
 import { toast } from 'react-toastify';
@@ -202,10 +202,42 @@ const QuizQA = (props) => {
         }
     }
     const [listQuiz, setListQuiz] = useState([]);
+
     useEffect(() => {
         fetchQuiz();
     }, [])
 
+    useEffect(() => {
+        if (selectedQuiz && selectedQuiz.value) {
+            fetchQuizWithQA();
+        }
+    }, [selectedQuiz])
+
+    //return a promose that resolves
+    function urltoFile(url, filename, mimeType) {
+        return fetch(url)
+            .then(res => res.arrayBuffer())
+            .then(buf => new File([buf], filename, { type: mimeType }));
+    }
+
+    const fetchQuizWithQA = async () => {
+        let rs = await getQuizWithQA(selectedQuiz.value)
+        if (rs && rs.EC === 0) {
+            //convert base64 to file object
+            let newQA = [];
+            for (let i = 0; i < rs.DT.qa.length; i++) {
+                let q = rs.DT.qa[i];
+                if (q.imageFile) {
+                    q.imageName = `Question-${q.id}.png`;
+                    //convert sang dang file
+                    q.imageFile = await urltoFile(`data:image/png;base64,${q.imageFile}`, `Question-${q.id}.png`, 'image/png')
+                }
+                newQA.push(q);
+            }
+            setQuestions(newQA);
+            // console.log("res: ", rs);
+        }
+    }
     const fetchQuiz = async () => {
         let res = await getAllQuizForAdmin();
         if (res && res.EC === 0) {
