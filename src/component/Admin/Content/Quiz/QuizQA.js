@@ -5,12 +5,10 @@ import { FiMinusCircle } from "react-icons/fi";
 import { FcPlus } from "react-icons/fc";
 import './QuizQA.scss';
 import { RiImageAddFill } from "react-icons/ri";
-import { v4 as uuidv4, validate } from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 import _ from 'lodash';
 import LightBox from "react-awesome-lightbox"
-import { getAllQuizForAdmin, getQuizWithQA } from "../../../../services/apiService";
-import { postCreateNewAnswerForQuestion } from '../../../../services/apiService';
-import { postCreateNewQuestionsForQuiz } from '../../../../services/apiService';
+import { getAllQuizForAdmin, getQuizWithQA, postUpsertQA } from "../../../../services/apiService";
 import { toast } from 'react-toastify';
 
 const QuizQA = (props) => {
@@ -22,9 +20,10 @@ const QuizQA = (props) => {
             imageName: '',
             answers: [
                 {
+
                     id: uuidv4(),
-                    description: ''
-                    , isCorrect: false
+                    description: '',
+                    isCorrect: false
                 }
             ]
         },
@@ -37,7 +36,20 @@ const QuizQA = (props) => {
         url: ''
 
     })
-    // console.log("Questions, ", questions);
+    const [listQuiz, setListQuiz] = useState([]);
+
+    useEffect(() => {
+        fetchQuiz();
+    }, [])
+
+    useEffect(() => {
+        if (selectedQuiz && selectedQuiz.value) {
+            fetchQuizWithQA();
+        }
+    }, [selectedQuiz])
+
+
+
     const handleAddRemoveQuestion = (type, id) => {
         // console.log(">>check", type, id);
         if (type === 'ADD') {
@@ -170,23 +182,34 @@ const QuizQA = (props) => {
             return;
         }
 
+        let questionsClone = _.cloneDeep(questions);
 
-        //submit question
-        for (const question of questions) {
-            const q = await postCreateNewQuestionsForQuiz(
-                +selectedQuiz.value,
-                question.description,
-                question.imageFile);
-            //submit answer
-            for (const answer of question.answers) {
-                await postCreateNewAnswerForQuestion(
-                    answer.description, answer.isCorrect, q.DT.id
-                )
+        for (let i = 0; i < questionsClone.length; i++) {
+            if (questionsClone[i].imageFile) {
+                questionsClone[i].imageFile =
+                    await toBase64(questionsClone[i].imageFile)
+                }
             }
+            let res = await postUpsertQA({
+                quizId: selectedQuiz.value,
+                questions: questionsClone
+            });
+        // console.log("clone: ", questionsClone);
+
+        if (res && res.EC === 0) {
+            toast.success(res.EM)
+            fetchQuizWithQA();
         }
-        toast.success('Create question and answer success! ')
-        setQuestions(initQuestions);
+        console.log("asd", res);
     }
+
+
+    const toBase64 = file => new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = reject;
+    });
 
 
 
@@ -201,17 +224,8 @@ const QuizQA = (props) => {
             setIsPreviewImage(true)
         }
     }
-    const [listQuiz, setListQuiz] = useState([]);
+    console.log("Question: ", questions);
 
-    useEffect(() => {
-        fetchQuiz();
-    }, [])
-
-    useEffect(() => {
-        if (selectedQuiz && selectedQuiz.value) {
-            fetchQuizWithQA();
-        }
-    }, [selectedQuiz])
 
     //return a promose that resolves
     function urltoFile(url, filename, mimeType) {
