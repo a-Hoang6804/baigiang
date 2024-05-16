@@ -14,7 +14,7 @@ import DetailQuiz from './component/User/DetailQuiz';
 import ManageQuiz from './component/Admin/Content/Quiz/ManageQuiz';
 import Questions from './component/Admin/Content/Question/Questions';
 import PrivateRoute from './routes/PrivateRoute';
-
+import { Suspense } from 'react';
 
 const NotFound = () => {
     return (
@@ -25,7 +25,7 @@ const NotFound = () => {
 }
 const Layout = (props) => {
     return (
-        <>
+        <Suspense fallback={<div>Loading...</div>}>
             <Routes>
                 <Route path="/" element={<App />}>
                     <Route index element={<HomePage />} />
@@ -48,7 +48,7 @@ const Layout = (props) => {
                 </Route>
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
-            
+
                 <Route path="*" element={<NotFound />} />
             </Routes>
             <ToastContainer
@@ -62,7 +62,7 @@ const Layout = (props) => {
                 pauseOnHover
             />
 
-        </>
+        </Suspense>
     )
 }
 export default Layout;
