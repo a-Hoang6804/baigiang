@@ -7,6 +7,15 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
+  a#basic-nav-dropdown {
+    padding-right: 15px;
+}
+  .languages{
+    padding-right: 4px;
+      .dropdown-toggle::after{
+        display: none !important;
+      }
+  }
   @media (min-width: 1300px){
 
       .container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {

@@ -10,6 +10,5 @@ export const doLogin = (data) => {
 export const doLogout = (data) => {
     return {
         type: USER_LOGOUT_SUCCESS,
-       
     }
 }
